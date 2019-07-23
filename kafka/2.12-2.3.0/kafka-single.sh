@@ -2,7 +2,9 @@
 
 HOMELOG='/home/logs'
 KAFKASINGLE=$HOMELOG'/kafka-single'
+
 KAFKALOG=$KAFKASINGLE'/kafka-logs'
+
 KAFKAZK=$KAFKASINGLE'/zk'
 KAFKAZKDATA=$KAFKAZK'/data'
 KAFKAZKLOG=$KAFKAZK'/log'
@@ -16,58 +18,62 @@ KAFKA_VERSION=2.12-2.3.0
 #defind kafka-manager-version
 KAFKAMANAGER_VERSION=stable
 
+#single-server-host
+MACHINE_HOST="10.1.62.21"
+
+#zookeeper-port
+#default port 2181
+ZOOKEEPER_PORT_1=2150
+
+#kafka-port
+KAFKA_PORT_1=9090
+
+#kafka-manager-port
+#default port 9000
+KAFKAMANAGER_PORT=14670
+
 if [ ! -d$KAFKALOG ];then
-    echo '::: '$KAFKALOG' not exsit folder :::'
+    echo '::: '$KAFKALOG' not exsit folder mkdir new folder :::'
     mkdir $KAFKALOG
 fi
 
 if [ ! -d$KAFKASINGLE ];then
-    echo '::: '$KAFKASINGLE' not exsit folder :::'
+    echo '::: '$KAFKASINGLE' not exsit folder mkdir new folder :::'
     mkdir $KAFKASINGLE
 fi
 
 if [ ! -d$KAFKAZK ];then
-    echo '::: '$KAFKAZK' not exsit folder :::'
+    echo '::: '$KAFKAZK' not exsit folder mkdir new folder :::'
     mkdir $KAFKAZK
 fi
 
 #kafka logs
 if [ ! -d$KAFKALOG ];then
-    echo '::: '$KAFKALOG' not exsit folder :::'
+    echo '::: '$KAFKALOG' not exsit folder mkdir new folder :::'
     mkdir $KAFKALOG
 fi
 
 #kafka zk data
 if [ ! -d$KAFKAZKDATA ];then
-    echo '::: '$KAFKAZKDATA' :::'
+    echo '::: '$KAFKAZKDATA' not exsit folder mkdir new folder :::'
     mkdir $KAFKAZKDATA
 fi
 
 #kafka zk log
 if [ ! -d$KAFKAZKLOG ];then
-    echo '::: '$KAFKAZKLOG' :::'
+    echo '::: '$KAFKAZKLOG' not exsit folder mkdir new folder :::'
     mkdir $KAFKAZKLOG
 fi
 
 
-
 echo '::: start build zookeeper-single :::'
 
-#zookeeper-cluster-ip
-#default cluster 3
-MACHINE_HOST="10.1.62.21"
-
-#zookeeper-cluster-port
-#default port 2181
-ZOOKEEPER_PORT_1=2150
-
-
 #build zk
-docker rm -f kafka-single-zk1
+docker rm -f kafka-single-zk
 
 docker run  -d \
 --restart=always \
---name kafka-single-zk1 \
+--name kafka-single-zk \
 -p $ZOOKEEPER_PORT_1:2181 \
 -e "ZOO_INIT_LIMIT=2000" \
 -e "ZOO_MAX_CLIENT_CNXNS=10000" \
@@ -76,12 +82,10 @@ docker run  -d \
 -v $KAFKAZKLOG:/datalog \
 zookeeper:$ZK_VERSION
 
-echo '::: build zookeeper successfully :::'
+echo '::: build zookeeper-single successfully :::'
 
 
 echo '::: start build kafka single :::'
-
-KAFKA_PORT_1=9090
 
 #kafka broker
 #eg ==> send : ./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic mykafka
@@ -107,8 +111,6 @@ echo '::::::::: build  kafka single successfully! ::::::::::::::'
 
 
 echo '::: start build kafka-single-manager :::'
-
-KAFKAMANAGER_PORT=14670
 
 #kafka manager
 docker rm -f kafka-single-manager
