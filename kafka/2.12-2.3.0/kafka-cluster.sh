@@ -16,7 +16,7 @@ ZK_VERSION=3.5.5
 KAFKA_VERSION=2.12-2.3.0
 
 #defind kafka-manager-version
-KAFKAMANAGER_VERSION=latest
+KAFKAMANAGER_VERSION=stable
 
 #default cluster 3
 MACHINE_HOST="10.1.62.21"
@@ -109,12 +109,15 @@ docker run -d \
 --restart=always \
 --name kafka-broker-1 \
 -p $KAFKA_PORT_1:$KAFKA_PORT_1 \
+-p 1099:1099 \
 -e KAFKA_ZOOKEEPER_CONNECT=$MACHINE_HOST:$ZOOKEEPER_PORT \
 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://$MACHINE_HOST:$KAFKA_PORT_1 \
 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:$KAFKA_PORT_1 \
 -e KAFKA_BROKER_ID=1 \
 -e KAFKA_HEAP_OPTS="-Xmx4G -Xms4G" \
 -e KAFKA_LOG_RETENTION_HOURS=24 \
+-e KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=10.1.62.21 -Dcom.sun.management.jmxremote.rmi.port=1099" \
+-e JMX_PORT=1099 \
 -v /etc/localtime:/etc/localtime \
 -v $KAFKACLUSTERLOG_1:/kafka/logs \
 wurstmeister/kafka:$KAFKA_VERSION
@@ -123,12 +126,15 @@ docker run -d \
 --restart=always \
 --name kafka-broker-2 \
 -p $KAFKA_PORT_2:$KAFKA_PORT_2 \
+-p 1100:1100 \
 -e KAFKA_ZOOKEEPER_CONNECT=$MACHINE_HOST:$ZOOKEEPER_PORT \
 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://$MACHINE_HOST:$KAFKA_PORT_2 \
 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:$KAFKA_PORT_2 \
 -e KAFKA_BROKER_ID=2 \
 -e KAFKA_HEAP_OPTS="-Xmx4G -Xms4G" \
 -e KAFKA_LOG_RETENTION_HOURS=24 \
+-e KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=10.1.62.21 -Dcom.sun.management.jmxremote.rmi.port=1100" \
+-e JMX_PORT=1100 \
 -v /etc/localtime:/etc/localtime \
 -v $KAFKACLUSTERLOG_2:/kafka/logs \
 wurstmeister/kafka:$KAFKA_VERSION
@@ -137,12 +143,15 @@ docker run -d \
 --restart=always \
 --name kafka-broker-3 \
 -p $KAFKA_PORT_3:$KAFKA_PORT_3 \
+-p 1101:1101 \
 -e KAFKA_ZOOKEEPER_CONNECT=$MACHINE_HOST:$ZOOKEEPER_PORT \
 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://$MACHINE_HOST:$KAFKA_PORT_3 \
 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:$KAFKA_PORT_3 \
 -e KAFKA_BROKER_ID=3 \
 -e KAFKA_HEAP_OPTS="-Xmx4G -Xms4G" \
 -e KAFKA_LOG_RETENTION_HOURS=24 \
+-e KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=10.1.62.21 -Dcom.sun.management.jmxremote.rmi.port=1101" \
+-e JMX_PORT=1101 \
 -v /etc/localtime:/etc/localtime \
 -v $KAFKACLUSTERLOG_3:/kafka/logs \
 wurstmeister/kafka:$KAFKA_VERSION
