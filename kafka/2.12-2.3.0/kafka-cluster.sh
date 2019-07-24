@@ -16,7 +16,7 @@ ZK_VERSION=3.5.5
 KAFKA_VERSION=2.12-2.3.0
 
 #defind kafka-manager-version
-KAFKAMANAGER_VERSION=stable
+KAFKAMANAGER_VERSION=latest
 
 #default cluster 3
 MACHINE_HOST="10.1.62.21"
