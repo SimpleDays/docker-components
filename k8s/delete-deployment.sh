@@ -11,7 +11,7 @@ apollo="apollo"
 #指定命名空间
 namespace="dev"
 
-for i in `kubectl get deployment -n dev  | awk '{print $1}'`
+for i in `kubectl get deployment -n $namespace  | awk '{print $1}'`
 do
 	if [[ $i != *$monitor* ]] && [[ $i != *$mesh* ]] && [[ $i != *$apollo* ]] && [[ $i != "NAME" ]]
 	then
