@@ -96,13 +96,16 @@ docker rm -f kafka-single
 docker run -d \
 --restart=always \
 --name kafka-single \
--p $KAFKA_PORT_1:9090 \
--e KAFKA_ZOOKEEPER_CONNECT=$MACHINE_HOST:$ZOOKEEPER_PORT_1 \
+-p $KAFKA_PORT_1:$KAFKA_PORT_1 \
+-p 1099:1110 \
+-e KAFKA_ZOOKEEPER_CONNECT=$MACHINE_HOST:$ZOOKEEPER_PORT \
 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://$MACHINE_HOST:$KAFKA_PORT_1 \
--e KAFKA_LISTENERS=PLAINTEXT://:$KAFKA_PORT_1 \
--e KAFKA_BROKER_ID=0 \
+-e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:$KAFKA_PORT_1 \
+-e KAFKA_BROKER_ID=1 \
 -e KAFKA_HEAP_OPTS="-Xmx4G -Xms4G" \
 -e KAFKA_LOG_RETENTION_HOURS=24 \
+-e KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=10.1.62.21 -Dcom.sun.management.jmxremote.rmi.port=1110" \
+-e JMX_PORT=1110 \
 -v /etc/localtime:/etc/localtime \
 -v $KAFKALOG:/kafka/logs \
 wurstmeister/kafka:$KAFKA_VERSION
