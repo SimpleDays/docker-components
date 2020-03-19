@@ -15,7 +15,7 @@ hexo是一个快速、简洁且高效的博客框架，有大量成熟的主题�
 
 ## 部署说明
 
-### 脚本说明
+### 1、脚本说明
 
 **hexo.sh :** 通过docker启动的脚本，选择了 **yoshikazum/hexo** 作为基础镜像。  
 
@@ -26,3 +26,36 @@ hexo是一个快速、简洁且高效的博客框架，有大量成熟的主题�
 **hexo-next-bak :** 我自己的主题配置，方便快速恢复使用，有喜欢的朋友也可以加载使用。  
 
 ### 注 ： 在启动脚本前进入看下脚本内的配置参数是否满足要求，然后再启动
+
+### 2、Hexo-next主题下本地搜索配置
+
+#### 进入容器  
+
+```# docker exec -it hexo /bin/bash```
+
+#### 安装search-db
+
+```# npm install hexo-generator-searchdb --save```
+
+#### 编辑Hexo站点配置（hexo根目录下的_config.yml文件）
+
+在配置文件下新增如下代码：  
+
+``` yml
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+
+```
+
+#### 编辑next主题下的配置文件
+
+在配置文件下设置启用
+
+``` yml
+# Local search
+local_search:
+  enable: true
+```
