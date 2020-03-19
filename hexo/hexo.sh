@@ -28,7 +28,7 @@ hexo_mounts_path='/home/dongliang/mnt/hexo/blog'
 #端口配置
 hexo_port=4000
 
-
+############################# Exec #################################################
 
 echo -e "\e[32m INFO: \e[0m""移除现有容器"
 
