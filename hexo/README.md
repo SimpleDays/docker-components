@@ -69,3 +69,9 @@ search:
 local_search:
   enable: true
 ```
+
+## 说明
+
+备份文件：  
+
+**hexo-next-bak-20200401.tar ：** 带有评论、seo的主题备份
