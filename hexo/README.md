@@ -74,4 +74,6 @@ local_search:
 
 备份文件：  
 
+**hexo-empty-demo.tar ：** 默认hexo主题备份  
+
 **hexo-next-bak-20200401.tar ：** 带有评论、seo的主题备份
